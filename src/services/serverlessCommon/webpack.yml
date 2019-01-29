@@ -1,0 +1,2 @@
+webpackConfig: ../../../webpack.config.js
+includeModules: false #modules should be in layer
