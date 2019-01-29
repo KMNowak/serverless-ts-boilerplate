@@ -1,10 +1,14 @@
 service:
-  name: serverless-ts-boilerplate-layers
+  name: ${self:custom.service.mainName}-layers
 
 provider:
   name: aws
   runtime: nodejs8.10
   stage: dev #choose stage to deploy
+
+custom:
+  service:
+    mainName: serverless-ts-boilerplate
 
 layers:
   layerNode:
