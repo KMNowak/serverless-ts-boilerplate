@@ -22,15 +22,13 @@ provider:
 custom:
   service:
     mainName: serverless-ts-boilerplate
-  webpack:
-    webpackConfig: ../../../webpack.config.js
-    includeModules: false #modules should be in layer
+  webpack: ${file(../serverlessCommon/webpack.yml)}
   usedLayers:
     layerVersion: 1
     modules: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-${self:provider.stage}:${self:custom.usedLayers.layerVersion}
   common:
-    cors: ${file(../common/cors.yml)}
-    apiGateway: ${file(../common/apiGateway.yml)}
+    cors: ${file(../serverlessCommon/cors.yml)}
+    apiGateway: ${file(../serverlessCommon/apiGateway.yml)}
 
 functions:
   authorizer:

@@ -1,2 +1,0 @@
-layerVersion: 1
-modules: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-${self:provider.stage}:${self:custom.usedLayers.layerVersion}
