@@ -1,0 +1,28 @@
+{
+  "name": "serverless-ts-boilerplate",
+  "version": "1.0.0",
+  "description": "Serverless webpack example using Typescript and multi micro services",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:all": "serverless deploy"
+  },
+  "dependencies": {
+    "knex": "0.16.3",
+    "source-map-support": "0.5.6"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.17",
+    "@types/node": "8.0.57",
+    "glob": "7.1.3",
+    "serverless-offline": "4.2.0",
+    "serverless-pseudo-parameters": "2.4.0",
+    "serverless-webpack": "5.1.1",
+    "ts-loader": "4.2.0",
+    "typescript": "2.9.2",
+    "webpack": "4.5.0",
+    "webpack-node-externals": "1.7.2"
+  },
+  "author": "KMNowak",
+  "license": "MIT"
+}

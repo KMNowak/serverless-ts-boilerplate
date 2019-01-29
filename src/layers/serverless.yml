@@ -1,0 +1,15 @@
+service:
+  name: ts-webpack-boilerplate-layers
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev #choose stage to deploy
+
+layers:
+  layerNodeBoilerplate:
+    name: layerNodeBoilerplate-${self:provider.stage}
+    path: layer_node-${self:provider.stage}
+    description: All required by boilerplate ${self:provider.stage} project node modules
+    compatibleRuntimes:
+      - nodejs8.10
