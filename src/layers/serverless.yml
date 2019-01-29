@@ -5,6 +5,9 @@ provider:
   name: aws
   runtime: nodejs8.10
   stage: dev #choose stage to deploy
+  tags:
+    environment: ${self:provider.stage}
+    project: ${self:service.name}
 
 custom:
   service:
@@ -13,7 +16,7 @@ custom:
 layers:
   layerNode:
     name: ${self:service.name}-${self:provider.stage}
-    path: layer_node-${self:provider.stage}
+    path: layer_node-${self:provider.stage} #remember to copy node_modules to specified layer directory
     description: All required by ${self:provider.stage} project node modules
     compatibleRuntimes:
       - nodejs8.10

@@ -11,7 +11,7 @@ const entries = files.reduce((acc, file) => Object.assign(acc, {
 }), {})
 
 Object.keys(slsw.lib.entries).forEach(
-  key => (entries[key] = ['./src/scripts/source-map-install.js', slsw.lib.entries[key]])
+  key => (entries[key] = ['./scripts/source-map-install.js', slsw.lib.entries[key]])
 )
 
 module.exports = {
