@@ -6,7 +6,7 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      message: `${Client.toString()}`,
+      message: Client.toString(),
       method: httpMethod,
       path,
       query: queryStringParameters,

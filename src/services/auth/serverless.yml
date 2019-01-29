@@ -1,0 +1,58 @@
+service:
+  name: ${self:custom.service.mainName}-auth
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  region: 'us-east-1'
+  runtime: nodejs8.10
+  stage: dev
+  memorySize: 256
+  timeout: 10
+  environment:
+    NODE_PATH: "./:/opt/node_modules" # new path to layered node_modules
+  tags:
+    environment: ${self:provider.stage}
+    project: ${self:service.name}
+
+custom:
+  service:
+    mainName: serverless-ts-boilerplate
+  webpack:
+    webpackConfig: ../../../webpack.config.js
+    includeModules: false #modules should be in layer
+  usedLayers:
+    layerVersion: 1
+    modules: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-${self:provider.stage}:${self:custom.usedLayers.layerVersion}
+  common:
+    cors: ${file(../common/cors.yml)}
+    apiGateway: ${file(../common/apiGateway.yml)}
+
+functions:
+  authorizer:
+    handler: authorizer.handler
+  login:
+    handler: login.handler
+    events:
+      - http:
+          method: POST
+          path: /auth/login
+          private: false
+          cors: ${self:custom.common.cors.noCache}
+  refresh_token:
+    handler: refreshToken.handler
+    events:
+      - http:
+          method: POST
+          path: /auth/refresh-token
+          private: false
+          cors: ${self:custom.common.cors.noCache}
+
+resources:
+  Resources:
+    GatewayResponseExpiredToken: ${self:custom.common.apiGateway.GatewayResponseExpiredToken}
+    GatewayResponseDefault4XX: ${self:custom.common.apiGateway.GatewayResponseDefault4XX}
