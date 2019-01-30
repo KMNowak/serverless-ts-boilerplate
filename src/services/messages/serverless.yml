@@ -16,6 +16,7 @@ custom:
   common:
     cors: ${file(../serverlessCommon/cors.yml)}
     apiGateway: ${file(../serverlessCommon/apiGateway.yml)}
+    authorizer: ${file(../serverlessCommon/authorizer.yml)}
 
 provider:
   name: aws
@@ -50,6 +51,7 @@ functions:
             method: GET
             path: /messages
             private: false
+            authorizer: ${self:custom.common.authorizer} #function must be called with header Authorization: 'allow' <- access token
             cors: ${self:custom.common.cors.defaultCache}
     getRoomMessages:
       handler: handler.getRoomMessages
