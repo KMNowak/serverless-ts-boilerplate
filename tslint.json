@@ -42,7 +42,7 @@
       "restrict-plus-operands": true,
       "switch-default": true,
       "indent": [true, "spaces", 4],
-      "max-line-length": [120],
+      "max-line-length": [false],
       "trailing-comma": true,
       "align": [true, "parameters", "statements", "elements"],
       "array-type": [true, "generic"],
