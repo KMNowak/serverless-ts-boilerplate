@@ -1,0 +1,4 @@
+arn: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:function:${self:custom.service.mainName}-auth-${self:provider.stage}-authorizer
+resultTtlInSeconds: 0
+identitySource: method.request.header.Authorization
+type: token
