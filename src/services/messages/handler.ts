@@ -1,4 +1,4 @@
-import { APIGatewayEvent, Handler } from 'aws-lambda';
+import { APIGatewayEvent, Handler } from 'aws-lambda'
 
 export const getRoomMessages: Handler = async (event: APIGatewayEvent) => {
   const { httpMethod, path, queryStringParameters, pathParameters, body } = event
