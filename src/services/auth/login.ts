@@ -38,5 +38,4 @@ export const handler: Handler = async (event: APIGatewayEvent) => {
             payload: {}
         })
     }
-
 }

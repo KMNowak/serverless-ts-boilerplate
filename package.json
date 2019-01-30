@@ -5,6 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint -p .",
     "deploy:all": "serverless deploy"
   },
   "dependencies": {
@@ -19,7 +20,8 @@
     "serverless-pseudo-parameters": "2.4.0",
     "serverless-webpack": "5.1.1",
     "ts-loader": "4.2.0",
-    "typescript": "2.9.2",
+    "tslint": "5.12.1",
+    "typescript": "3.2.4",
     "webpack": "4.5.0",
     "webpack-node-externals": "1.7.2"
   },

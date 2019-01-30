@@ -3,18 +3,18 @@ import { CustomAuthorizerHandler, CustomAuthorizerEvent, CustomAuthorizerCallbac
 export const handler: CustomAuthorizerHandler = (event: CustomAuthorizerEvent, _: Context, callback: CustomAuthorizerCallback) => {
     switch (event.authorizationToken.toLowerCase()) {
         case 'allow':
-            callback(null, generatePolicy('user', 'Allow', event.methodArn));
-            break;
+            callback(null, generatePolicy('user', 'Allow', event.methodArn))
+            break
         case 'deny':
-            callback(null, generatePolicy('user', 'Deny', event.methodArn));
-            break;
+            callback(null, generatePolicy('user', 'Deny', event.methodArn))
+            break
         case 'unauthorized':
-            callback("Unauthorized");   // Return a 401 Unauthorized response
-            break;
+            callback('Unauthorized')   // Return a 401 Unauthorized response
+            break
         default:
-            callback("Error: Invalid token");
+            callback('Error: Invalid token')
     }
-};
+}
 
 // Help function to generate an IAM policy
 const generatePolicy = (principalId: string, effect: string, resource: string) => {
