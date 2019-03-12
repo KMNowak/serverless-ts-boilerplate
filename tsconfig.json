@@ -9,7 +9,8 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "target": "es2017",
-    "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true
   },
   "include": [
     "src/**/**/*.ts"
