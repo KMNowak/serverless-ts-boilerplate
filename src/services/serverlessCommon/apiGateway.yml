@@ -4,6 +4,7 @@ GatewayResponseExpiredToken:
     ResponseParameters:
       gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
       gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,PATCH,DELETE'"
     ResponseType: EXPIRED_TOKEN
     RestApiId:
       Ref: 'ApiGatewayRestApi'
@@ -14,7 +15,7 @@ GatewayResponseDefault4XX:
     ResponseParameters:
       gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
       gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+      gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,PATCH,DELETE'"
     ResponseType: DEFAULT_4XX
     RestApiId:
       Ref: 'ApiGatewayRestApi'

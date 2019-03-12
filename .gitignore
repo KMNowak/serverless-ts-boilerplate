@@ -4,8 +4,24 @@ jspm_packages
 
 # Serverless directories
 .serverless
+dist
+_warmup
 
 # Webpack directories
 .webpack
 
 package-lock.json
+
+# Environment variables
+.envs
+
+# Editors configs
+.idea
+.vscode
+.DS_Store
+
+# Build files
+.dist
+.js
+
+!webpack.config.js

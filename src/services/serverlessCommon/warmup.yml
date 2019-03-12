@@ -1,0 +1,12 @@
+enabled: ${self:custom.isProd.${self:provider.stage}, false} # Whether to warm up functions by default or not, enabled only on production
+cleanFolder: false # Whether remove _warmup directory with WarmUp lambda or not
+folderName: '_warmup' # Name of the folder created for the generated warmup
+memorySize: 256
+vpc: false
+events:
+  - schedule: 'cron(0/10 5-22 ? * * *)' # Run WarmUp every 10 minutes, every day, between 5:00 and 22:00 (UTC)
+timeout: 5
+prewarm: true # Run WarmUp immediately after a deployment lambda
+concurrency: 1 # Warm up 1 concurrent instance
+layers:
+  - ${self:custom.layers.layerNode} # EXPERIMENTAL!

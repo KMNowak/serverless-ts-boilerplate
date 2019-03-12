@@ -1,78 +1,90 @@
 service:
-  name: ${self:custom.service.mainName}-messages
+  name: ${self:custom.service.mainName}-${self:custom.service.subService}
 
 plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-pseudo-parameters
+  - serverless-domain-manager
+  - serverless-plugin-warmup
+
+provider:
+  name: aws
+  region: 'eu-central-1'
+  runtime: nodejs8.10
+  role: arn:aws:iam::#{AWS::AccountId}:role/{ROLE_FOR_YOUR_LAMBDAS} # previous hash is not comment due to usage of serverless-pseudo-parameters
+  stage: ${opt:stage} #choose in cli: serverless --stage {dev/prod} to deploy
+  memorySize: 256
+  timeout: 10
+  environment: ${self:custom.environment}
+  tags:
+    project: ${self:custom.service.mainName}
 
 custom:
   service:
     mainName: serverless-ts-boilerplate
+    subService: messages #choose name of the service
   webpack: ${file(../serverlessCommon/webpack.yml)}
-  usedLayers:
+  warmup: ${file(../serverlessCommon/warmup.yml)}
+  layers:
     layerVersion: 1
-    modules: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-${self:provider.stage}:${self:custom.usedLayers.layerVersion}
+    layerNode: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-layerNode-${self:provider.stage}:${self:custom.layers.layerVersion}
+  customDomain: ${file(../serverlessCommon/customDomain.yml)}
+  domains: ${file(../serverlessCommon/domains.yml)}
+  environment: ${file(../../.envs/${self:provider.stage}.yml)}
   common:
     cors: ${file(../serverlessCommon/cors.yml)}
     apiGateway: ${file(../serverlessCommon/apiGateway.yml)}
     authorizer: ${file(../serverlessCommon/authorizer.yml)}
-
-provider:
-  name: aws
-  region: 'us-east-1'
-  runtime: nodejs8.10
-  stage: dev
-  memorySize: 256
-  timeout: 10
-  environment:
-    NODE_PATH: "./:/opt/node_modules" # new path to layered node_modules
-  tags:
-    environment: ${self:provider.stage}
-    project: ${self:service.name}
+  isProd:
+    dev: false
+    prod: true
 
 functions:
-    createChatMessage:
-      handler: createChatMessage.handler
-      layers:
-        - ${self:custom.usedLayers.modules}
-      events:
-        - http:
-            method: POST
-            path: /messages
-            private: false
-            cors: ${self:custom.common.cors.defaultCache}
-    getMessage:
-      handler: getMessage.handler
-      layers:
-        - ${self:custom.usedLayers.modules}
-      events:
-        - http:
-            method: GET
-            path: /messages
-            private: false
-            authorizer: ${self:custom.common.authorizer} #function must be called with header Authorization: 'allow' <- access token
-            cors: ${self:custom.common.cors.defaultCache}
-    getRoomMessages:
-      handler: handler.getRoomMessages
-      layers:
-        - ${self:custom.usedLayers.modules}
-      events:
-        - http:
-            method: GET
-            path: /messages/room/{room}
-            private: false
-            cors: ${self:custom.common.cors.defaultCache}
-    getUserMessages:
-      handler: handler.getUserMessages
-      layers:
-        - ${self:custom.usedLayers.modules}
+  createChatMessage:
+    handler: createChatMessage.handler
+    layers:
+      - ${self:custom.usedLayers.modules}
+    events:
+      - http:
+          method: POST
+          path: /messages
+          private: false
+          cors: ${self:custom.common.cors.defaultCache}
+  getMessage:
+    handler: getMessage.handler
+    layers:
+      - ${self:custom.usedLayers.modules}
+    events:
+      - http:
+          method: GET
+          path: /messages
+          private: false
+          authorizer: ${self:custom.common.authorizer}
+          cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
+
+  getRoomMessages:
+    handler: handler.getRoomMessages
+    layers:
+      - ${self:custom.usedLayers.modules}
+    events:
+      - http:
+          method: GET
+          private: false
+          authorizer: ${self:custom.common.authorizer}
+          cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
+
+  getUserMessages:
+    handler: handler.getUserMessages
+    layers:
+      - ${self:custom.layers.layerNode}
       events:
         - http:
             method: GET
             path: /messages/user/{userId}
             private: false
-            cors: ${self:custom.common.cors.defaultCache}
+            authorizer: ${self:custom.common.authorizer}
+            cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
 
 resources:
   Resources:
