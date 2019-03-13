@@ -12,6 +12,7 @@ const lambda: AWSTypes.HandlerLogic<Query> = async event => {
     const { sampleUUID } = queryStringParameters
 
     const sampleOperations = new SampleOperations(transaction)
+    // todo: add jest tests
 
     return sampleOperations.getSampleIdByUUID(sampleUUID)
 }
