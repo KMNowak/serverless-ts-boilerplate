@@ -12,8 +12,8 @@ provider:
   name: aws
   region: 'eu-central-1'
   runtime: nodejs8.10
-  role: arn:aws:iam::#{AWS::AccountId}:role/{ROLE_FOR_YOUR_LAMBDAS} # previous hash is not comment due to usage of serverless-pseudo-parameters
   stage: ${opt:stage} #choose in cli: serverless --stage {dev/prod} to deploy
+  role: arn:aws:iam::#{AWS::AccountId}:role/Lambda-deploy # previous hash is not comment due to usage of serverless-pseudo-parameters
   memorySize: 256
   timeout: 10
   environment: ${self:custom.environment}
@@ -23,11 +23,11 @@ provider:
 custom:
   service:
     mainName: serverless-ts-boilerplate
-    subService: messages #choose name of the service
+    subService: sample #choose name of the service
   webpack: ${file(../serverlessCommon/webpack.yml)}
   warmup: ${file(../serverlessCommon/warmup.yml)}
   layers:
-    layerVersion: 1
+    layerVersion: 33
     layerNode: arn:aws:lambda:${self:provider.region}:#{AWS::AccountId}:layer:${self:custom.service.mainName}-layers-layerNode-${self:provider.stage}:${self:custom.layers.layerVersion}
   customDomain: ${file(../serverlessCommon/customDomain.yml)}
   domains: ${file(../serverlessCommon/domains.yml)}
@@ -41,50 +41,18 @@ custom:
     prod: true
 
 functions:
-  createChatMessage:
-    handler: createChatMessage.handler
-    layers:
-      - ${self:custom.usedLayers.modules}
-    events:
-      - http:
-          method: POST
-          path: /messages
-          private: false
-          cors: ${self:custom.common.cors.defaultCache}
-  getMessage:
-    handler: getMessage.handler
-    layers:
-      - ${self:custom.usedLayers.modules}
-    events:
-      - http:
-          method: GET
-          path: /messages
-          private: false
-          authorizer: ${self:custom.common.authorizer}
-          cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
-
-  getRoomMessages:
-    handler: handler.getRoomMessages
-    layers:
-      - ${self:custom.usedLayers.modules}
-    events:
-      - http:
-          method: GET
-          private: false
-          authorizer: ${self:custom.common.authorizer}
-          cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
-
-  getUserMessages:
-    handler: handler.getUserMessages
+  sampleGet:
+    handler: sampleGet.handler
+    warmup: false
     layers:
       - ${self:custom.layers.layerNode}
-      events:
-        - http:
-            method: GET
-            path: /messages/user/{userId}
-            private: false
-            authorizer: ${self:custom.common.authorizer}
-            cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
+    events:
+      - http:
+          method: GET
+          path: /sample
+          private: false
+          authorizer: ${self:custom.common.authorizer}
+          cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
 
 resources:
   Resources:
