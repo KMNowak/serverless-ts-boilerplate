@@ -7,9 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -p ."
   },
-  "pre-commit": [
-    "lint"
-  ],
   "dependencies": {
     "amazon-cognito-identity-js": "1.31.0",
     "currency.js": "1.2.1",
@@ -40,7 +37,6 @@
     "copy-webpack-plugin": "5.0.0",
     "glob": "7.1.3",
     "jest": "24.1.0",
-    "pre-commit": "1.2.2",
     "serverless-domain-manager": "2.6.13",
     "serverless-offline": "4.2.0",
     "serverless-plugin-warmup": "git+ssh:git@github.com:KMNowak/serverless-plugin-warmup.git#feature/layers",
