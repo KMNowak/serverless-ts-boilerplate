@@ -4,17 +4,16 @@ import { AWSTypes } from 'lib/types'
 import { sampleGetSchema } from './validators'
 
 type Query = {
-    sampleUUID: string,
-    anotherKey?: string
+    sampleUUID: string
 }
 
 const lambda: AWSTypes.HandlerLogic<Query> = async event => {
     const { transaction, queryStringParameters } = event
-    const { sampleUUID, anotherKey } = queryStringParameters
+    const { sampleUUID } = queryStringParameters
 
     const sampleOperations = new SampleOperations(transaction)
 
-    return sampleOperations.sampleGetResponse(sampleUUID, anotherKey)
+    return sampleOperations.getSampleIdByUUID(sampleUUID)
 }
 
 export const handler = handlerWrapper<Query>(lambda, sampleGetSchema)
