@@ -49,7 +49,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /sample
+          path: /
           private: false
           authorizer: ${self:custom.common.authorizer}
           cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
