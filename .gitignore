@@ -24,4 +24,7 @@ package-lock.json
 .dist
 .js
 
+# included js files
+
 !webpack.config.js
+!source-map-install.js
