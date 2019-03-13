@@ -13,7 +13,7 @@ provider:
   region: 'eu-central-1'
   runtime: nodejs8.10
   stage: ${opt:stage} #choose in cli: serverless --stage {dev/prod} to deploy
-  role: arn:aws:iam::#{AWS::AccountId}:role/Lambda-deploy # previous hash is not comment due to usage of serverless-pseudo-parameters
+  role: arn:aws:iam::#{AWS::AccountId}:role/lambda-basic-execution # previous hash is not comment due to usage of serverless-pseudo-parameters
   memorySize: 256
   timeout: 10
   environment: ${self:custom.environment}
@@ -23,7 +23,7 @@ provider:
 custom:
   service:
     mainName: serverless-ts-boilerplate
-    subService: sample #choose name of the service
+    subService: sample #choose name of the service, it will be path to rest of endpoints e.g myApi.com/sample/{myEndpointUri}
   webpack: ${file(../serverlessCommon/webpack.yml)}
   warmup: ${file(../serverlessCommon/warmup.yml)}
   layers:
@@ -49,7 +49,7 @@ functions:
     events:
       - http:
           method: GET
-          path: /sample
+          path: / # is uri which root is ${self:custom.service.subService}
           private: false
           authorizer: ${self:custom.common.authorizer}
           cors: ${self:custom.common.cors.${self:provider.stage}.defaultCache}
