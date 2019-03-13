@@ -1,13 +1,13 @@
 import { successfulResponseWrapper, errorResponseWrapper, HttpError } from 'lib/utils'
 import { AWSTypes } from 'lib/types'
 
-type WithDB = <Q = {}, B = {}> (lambda: AWSTypes.Lambda<Q, B>) => AWSTypes.Handler<Q, B>
+type WithDB = <Q = {}, B = {}> (handlerLogic: AWSTypes.HandlerLogic<Q, B>) => AWSTypes.Handler<Q, B>
 
-export const withDB: WithDB = lambda => async event => {
+export const withDB: WithDB = handlerLogic => async event => {
     try {
-        // in case lambda has plain logic without connection to DB
+        // in case handlerLogic has plain logic without connection to DB
         if (!event.dbClient) {
-            const result = await lambda(event)
+            const result = await handlerLogic(event)
 
             return successfulResponseWrapper(result)
         }
@@ -18,7 +18,7 @@ export const withDB: WithDB = lambda => async event => {
                 transaction
             }
 
-            return lambda(extendedEvent)
+            return handlerLogic(extendedEvent)
         })
 
         return successfulResponseWrapper(result)

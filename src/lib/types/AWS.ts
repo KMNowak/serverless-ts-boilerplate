@@ -13,5 +13,5 @@ export type Event<Q = {}, B = {}> = {
 }
 
 // tslint:disable-next-line no-any
-export type Lambda<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<any>
+export type HandlerLogic<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<any>
 export type Handler<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<ResponsesTypes.LambdaResponse>

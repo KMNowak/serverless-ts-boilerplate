@@ -9,8 +9,8 @@ import { proxyResponse } from './proxyResponse'
 import { validateInput } from './validateInput'
 import { passthroughAll } from './passthroughAll'
 
-export const combinedMiddyFactory = <L extends AWSTypes.Lambda>(lambda: L, validationSchema?: JoiObject, shouldConnectDB: boolean = true) =>
-    middy(lambda)
+export const combinedMiddyFactory = <L extends AWSTypes.HandlerLogic>(handlerLogic: L, validationSchema?: JoiObject, shouldConnectDB: boolean = true) =>
+    middy(handlerLogic)
         .use(middyMiddlewareWarmup())
         .use(httpEventNormalizer())
         .use(jsonBodyParser())
