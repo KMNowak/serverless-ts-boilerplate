@@ -4,6 +4,7 @@
   "description": "Serverless webpack example using Typescript and multi micro services",
   "main": "handler.js",
   "scripts": {
+    "layerCreate:dev": "mkdir -p src/layers/layer_node-dev && cpx package.json src/layers/layer_node-dev && (cd src/layers/layer_node-dev && npm i --production)",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -p .",
     "tsCompile": "tsc"
@@ -40,6 +41,7 @@
     "@types/ramda": "0.25.50",
     "@types/xregexp": "3.0.29",
     "copy-webpack-plugin": "5.0.0",
+    "cpx": "1.5.0",
     "glob": "7.1.3",
     "jest": "24.1.0",
     "pre-commit": "1.2.2",
