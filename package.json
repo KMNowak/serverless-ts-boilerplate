@@ -4,13 +4,14 @@
   "description": "Serverless webpack example using Typescript and multi micro services",
   "main": "handler.js",
   "scripts": {
-    "layerCreate:dev": "mkdir -p src/layers/layer_node-dev && cpx package.json src/layers/layer_node-dev && (cd src/layers/layer_node-dev && npm i --production)",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint -p .",
-    "tsCompile": "tsc"
+    "layer-create:dev": "mkdir -p src/layers/layer_node-dev && cpx package.json src/layers/layer_node-dev && (cd src/layers/layer_node-dev && npm i --production)",
+    "layer-create:prod": "mkdir -p src/layers/layer_node-prod && cpx package.json src/layers/layer_node-prod && (cd src/layers/layer_node-prod && npm i --production)",
+    "ts-compile": "node node_modules/typescript/bin/tsc",
+    "lint": "node node_modules/tslint/bin/tslint -p ."
   },
   "pre-commit": [
-    "tsCompile",
+    "ts-compile",
     "lint"
   ],
   "dependencies": {
