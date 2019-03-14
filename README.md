@@ -1,6 +1,10 @@
 # serverless-ts-boilerplate
 ## Boilerplate for multi microservices API written in Typescript with use of AWS Lambda
-[![Serverless][serverless-badge]](serverless-badge-url)
+[![Serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+
+
 Repo to help you create quick deployed, nicely typed microservice.
 # Before we start
 
@@ -188,7 +192,4 @@ I am opened to your ideas . Once you have any idea how to improve it please don'
 
 ## License
 
-This software is released under the MIT license. See [the license file](LICENSE) for more details.
-
-[serverless-badge]: http://public.serverless.com/badges/v3.svg
-[serverless-badge-url]: http://www.serverless.com
+This software is released under the MIT license.
