@@ -180,6 +180,12 @@ COGNITO_CLIENT_APP_ID: [value]
 
 I am opened to your ideas . Once you have any idea how to improve it please don't hesitate to PR.
 
+* Fork repo
+* Install the dependencies with `npm i`
+* Create a feature branch `git checkout -b your_new_feature`
+* Add your code and add tests if you implement a new feature
+* Validate your changes `npm run lint` 
+
 ## License
 
 This software is released under the MIT license. See [the license file](LICENSE) for more details.
