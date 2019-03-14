@@ -1,5 +1,6 @@
 # serverless-ts-boilerplate
 ## Boilerplate for multi microservices API written in Typescript with use of AWS Lambda
+[![Serverless][serverless-badge]](serverless-badge-url)
 Repo to help you create quick deployed, nicely typed microservice.
 # Before we start
 
@@ -173,10 +174,15 @@ STAGE: ${self:provider.stage}
 
 COGNITO_USER_POOL_ID: [value]
 COGNITO_CLIENT_APP_ID: [value]
-
-LAMBDA_MEMORY_SIZE: [256/512/1024]
 ```
 
-# Contribution
+## Contribution
 
-I am opened to your ideas. Once you have any idea how to improve it please don't hesitate to PR.
+I am opened to your ideas . Once you have any idea how to improve it please don't hesitate to PR.
+
+## License
+
+This software is released under the MIT license. See [the license file](LICENSE) for more details.
+
+[serverless-badge]: http://public.serverless.com/badges/v3.svg
+[serverless-badge-url]: http://www.serverless.com
