@@ -5,9 +5,9 @@ Repo to help you create quick deployed, nicely typed microservice.
 # Before we start
 
 Due to serverless nature of repo there are some custom names used:
-- handler: main logic of lambda, executed on API call
-- operations: in standard model they would be called service. Business logic for separated context. Handler uses some operations methods to return result 
-- service: separated part of the API concerning operations on particular context (user, posts etc.) with use of operations. In final result our api looks this way: `www.domain.com/{service}/{uri}` e.g  `GET` on www.mydomain.com/user/post 
+- **handler**: main logic of lambda, executed on API call
+- **operations**: in standard model they would be called service. Business logic for separated context. **Handler** uses some **operations** methods to return result 
+- **service**: separated part of the API concerning operations on particular context (user, posts etc.) with use of **operations**. In final result our api looks this way: `www.domain.com/{service}/{uri}` e.g  `GET` on www.mydomain.com/user/post 
 
 # Prerequisites:
 - `aws cli`
