@@ -1,8 +1,8 @@
 import knex, { Transaction } from 'knex'
 import { Context, Callback } from 'aws-lambda'
-import { ResponsesTypes } from 'lib/types'
+import { ResponsesTypes, KeyValuePair } from 'lib/types'
 
-export type Event<Q = {}, B = {}> = {
+export type Event<Q = KeyValuePair, B = KeyValuePair> = {
     headers: {
         Authorization: string
     }

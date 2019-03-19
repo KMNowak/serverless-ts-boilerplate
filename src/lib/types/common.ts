@@ -21,6 +21,10 @@ export type ObjectWithNonNullableProps<O extends {}> = {
     [K in keyof O]: NonNullable<O[K]>
 }
 
+export type KeyValuePair<T = any> = {
+    [key: string]: T
+}
+
 export interface IQueryFilters<T = string> {
     order?: SortOrder,
     orderBy?: T,

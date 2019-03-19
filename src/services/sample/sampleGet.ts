@@ -3,18 +3,21 @@ import { handlerWrapper } from 'lib/utils'
 import { AWSTypes } from 'lib/types'
 import { sampleGetSchema } from './validators'
 
-type Query = {
+export type Query = {
     sampleUUID: string
 }
 
-const lambda: AWSTypes.HandlerLogic<Query> = async event => {
+export const lambda: AWSTypes.HandlerLogic<Query> = async event => {
     const { transaction, queryStringParameters } = event
     const { sampleUUID } = queryStringParameters
 
     const sampleOperations = new SampleOperations(transaction)
-    // todo: add jest tests
 
-    return sampleOperations.getSampleIdByUUID(sampleUUID)
+    const id = await sampleOperations.getSampleIdByUUID(sampleUUID)
+
+    return {
+        id
+    }
 }
 
 export const handler = handlerWrapper<Query>(lambda, sampleGetSchema)

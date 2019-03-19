@@ -28,3 +28,4 @@ package-lock.json
 
 !webpack.config.js
 !source-map-install.js
+!jest.config.js
