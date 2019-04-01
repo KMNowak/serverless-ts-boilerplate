@@ -7,7 +7,7 @@ type Query = {
     sampleUUID: string
 }
 
-const lambda: AWSTypes.HandlerLogic<Query> = async event => {
+const lambda: AWSTypes.LambdaLogic<Query> = async event => {
     const { transaction, queryStringParameters } = event
     const { sampleUUID } = queryStringParameters
 

@@ -1,31 +1,60 @@
 import { QueryBuilder, Transaction } from 'knex'
 import { R } from 'lib/utils'
 import { SQL_CONSTANTS } from 'lib/common'
-import { IQueryFilters } from 'lib/types'
+import { KeyValuePair } from 'lib/types'
+import { Base as Types } from './types'
 
 export class OperationsBase {
-    constructor(public transaction: Transaction) {}
+    constructor(public transaction: Transaction) {
+    }
 
-    public applyQueryFilters(queryBuilder: QueryBuilder, props: IQueryFilters) {
-        const { query, queryBy, orderBy, order } = props
-        const shouldSearchByQueryAndOrderItems = !R.isNil(queryBy) && !R.isNil(orderBy)
+    public withFiltersApplied(props: Types.Filters) {
+        return (queryBuilder: QueryBuilder) => {
+            const { orderFilter, whereLikeFilters } = this.prepareFilters(props)
+            const queryBuilderWithWhereLike = this.whereLikeQueryBuilder(queryBuilder, whereLikeFilters)
 
-        if (shouldSearchByQueryAndOrderItems) {
+            return this.orderByQueryBuilder(queryBuilderWithWhereLike, orderFilter)
+        }
+    }
+
+    public prepareWhereLikeProps(queryByProps: KeyValuePair): Types.WhereLikeFilters {
+        return R.compose(
+            // @ts-ignore
+            R.toPairs,
+            R.reject(R.isNil))
+        (queryByProps)
+    }
+
+    private prepareFilters(props: Types.Filters) {
+        const { defaultFilters, queryFilters } = props
+
+        return {
+            ...defaultFilters,
+            ...(queryFilters || {})
+        }
+    }
+
+    private whereLikeQueryBuilder(queryBuilder: QueryBuilder, wheres?: Types.WhereLikeFilters): QueryBuilder {
+        if (!wheres) {
             return queryBuilder
-                .where(queryBy, SQL_CONSTANTS.LIKE, `%${query}%`)
-                .orderBy(orderBy, order)
         }
 
-        const shouldOrderItems = !R.isNil(orderBy)
+        return wheres.reduce((builderWithWheres, queryBy) => {
+            const [field, value] = queryBy
 
-        if (shouldOrderItems) {
-            return queryBuilder.orderBy(orderBy, order)
+            return builderWithWheres.where(field, SQL_CONSTANTS.LIKE, `%${value}%`)
+        }, queryBuilder)
+    }
+
+    private orderByQueryBuilder(queryBuilder: QueryBuilder, orderFilter?: Types.OrderFilter): QueryBuilder {
+        if (!orderFilter) {
+            return queryBuilder
         }
 
-        const shouldSearchByQuery = !R.isNil(queryBy)
+        const { orderBy, orderWay } = orderFilter
 
-        if (shouldSearchByQuery) {
-            return queryBuilder.where(queryBy, SQL_CONSTANTS.LIKE, `%${query}%`)
+        if (orderBy && orderWay) {
+            return queryBuilder.orderBy(orderBy, orderWay)
         }
 
         return queryBuilder

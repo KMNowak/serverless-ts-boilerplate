@@ -1,5 +1,7 @@
-import * as SampleOperationsTypes from './sample'
+import * as Base from './base'
+import * as Sample from './sample'
 
 export {
-    SampleOperationsTypes
+    Base,
+    Sample
 }

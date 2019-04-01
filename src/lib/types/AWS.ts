@@ -9,9 +9,9 @@ export type Event<Q = {}, B = {}> = {
     queryStringParameters: Q,
     body: B,
     dbClient?: knex,
-    transaction?: Transaction
+    transaction: Transaction
 }
 
 // tslint:disable-next-line no-any
-export type HandlerLogic<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<any>
+export type LambdaLogic<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<any>
 export type Handler<Q = {}, B = {}> = (event: Event<Q, B>, context?: Context, callback?: Callback) => Promise<ResponsesTypes.LambdaResponse>

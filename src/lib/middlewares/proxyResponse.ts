@@ -11,8 +11,8 @@ const serverErrorCode = httpStatusCodes.INTERNAL_SERVER_ERROR
 const serverErrorMessage = httpStatusCodes.getStatusText(serverErrorCode)
 const isBase64Encoded = false
 
-export const proxyResponse = () => ({
-    after: (handler: HandlerLambda<AWSTypes.Event, ResponsesTypes.FullMiddlewareResponse>, next: NextFunction) => {
+export const proxyResponse = <Q = {}, B = {}>() => ({
+    after: (handler: HandlerLambda<AWSTypes.Event<Q, B>, ResponsesTypes.FullMiddlewareResponse>, next: NextFunction) => {
         const { headers } = handler.response
 
         try {
@@ -60,8 +60,7 @@ export const proxyResponse = () => ({
             }
 
             return next()
-        }
-        catch (err) {
+        } catch (err) {
             handler.response = {
                 headers: {
                     ...headers,
@@ -79,7 +78,7 @@ export const proxyResponse = () => ({
         }
     },
     // on middleware error (e.g. validateInputs), thrown from lambda errors are caught by WithTryCatch(lambda) and returned in handler.response.error
-    onError: (handler: HandlerLambda<AWSTypes.Event, ResponsesTypes.FullMiddlewareResponse>, next: NextFunction) => {
+    onError: (handler: HandlerLambda<AWSTypes.Event<Q, B>, ResponsesTypes.FullMiddlewareResponse>, next: NextFunction) => {
         const { headers } = handler.response
         const error = handler.error as unknown // must convert to unknown to force HandlerLambda.error type overwriting
         const lambdaError = error as HttpError

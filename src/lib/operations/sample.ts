@@ -1,6 +1,6 @@
 import { Transaction } from 'knex'
 import { HttpError } from 'lib/utils'
-import { SampleOperationsTypes as Types } from 'lib/operations/types'
+import { Sample as Types } from 'lib/operations/types'
 import { sampleTable } from 'lib/models/mySQLTables'
 import { OperationsBase } from './OperationsBase'
 
