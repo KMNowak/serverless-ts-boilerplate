@@ -164,22 +164,6 @@ resources:
 
 ```
 
-## src/.envs/[dev/prod].yml file MUST include
-
-```
-MY_SQL_HOST: [value]
-MY_SQL_USER: [value]
-MY_SQL_PASSWORD: [value]
-MY_SQL_DATABASE: [value]
-MY_SQL_VERSION: [value]
-
-NODE_PATH: "./:/opt/node_modules" # new path to layered node_modules
-STAGE: ${self:provider.stage}
-
-COGNITO_USER_POOL_ID: [value]
-COGNITO_CLIENT_APP_ID: [value]
-```
-
 ## Contribution
 
 I am opened to your ideas . Once you have any idea how to improve it please don't hesitate to PR.
