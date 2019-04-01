@@ -8,5 +8,3 @@ events:
 timeout: 5
 prewarm: true # Run WarmUp immediately after a deployment lambda
 concurrency: 1 # Warm up 1 concurrent instance
-layers:
-  - ${self:custom.layers.layerNode} # EXPERIMENTAL!

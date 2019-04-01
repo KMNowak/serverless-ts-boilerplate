@@ -3,6 +3,7 @@ import { SortOrder } from './db'
 // tslint:disable no-any
 
 export type Nullable<T> = T | null
+export type Optional<T> = T | undefined
 export type InKeyOfObject<O, V = any> = { [P in keyof O]: V }
 
 export type JWTDecodedAccessToken = {
@@ -21,11 +22,17 @@ export type ObjectWithNonNullableProps<O extends {}> = {
     [K in keyof O]: NonNullable<O[K]>
 }
 
-export interface IQueryFilters<T = string> {
-    order?: SortOrder,
-    orderBy?: T,
-    query?: string,
-    queryBy?: T
+export type KeyValuePair<T = any> = {
+    [key: string]: T
+}
+
+export type FlatPick<T, K extends keyof T> = T[K]
+
+export type Tuple<K = string, V = any> = [K, V]
+
+export interface Order<T = string> {
+    orderWay?: SortOrder,
+    orderBy?: T
 }
 
 // tslint:enable no-any

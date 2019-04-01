@@ -30,6 +30,7 @@ const replaceNil = <T = any>(defaultValue: T, valueToCheck?: Nullable<T>) => isN
 
 const normalizeAllProps = <O extends {}, T = ObjectWithNullableProps<O>>(propsToNormalize: O, defaultValue: any = '') => compose(
     fromPairs,
+    // @ts-ignore
     map(([key, value]) => [key, replaceNil(defaultValue, value)]),
     toPairs
 )(propsToNormalize) as unknown as ObjectWithNonNullableProps<T>

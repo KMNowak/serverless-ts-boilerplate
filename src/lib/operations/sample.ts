@@ -1,6 +1,7 @@
 import { Transaction } from 'knex'
 import { HttpError } from 'lib/utils'
-import { SampleOperationsTypes as Types } from 'lib/operations/types'
+import { CustomErrorCodes } from 'lib/types'
+import { Sample as Types } from 'lib/operations/types'
 import { sampleTable } from 'lib/models/mySQLTables'
 import { OperationsBase } from './OperationsBase'
 
@@ -18,14 +19,12 @@ export class SampleOperations extends OperationsBase {
                 [sampleTable.columns.sampleUUID]: sampleUUID
             })
             .limit(1)
-            .then((samples?: Array<Types.GetSampleByUUIDResponse>) => {
-                if (!samples) {
-                    throw new HttpError()
+            .then(([sample]: Array<Types.GetSampleByUUIDResponse>) => {
+                if (!sample) {
+                    throw new HttpError().NotFound(CustomErrorCodes.SomethingNotFound, { notFoundUUID: sampleUUID })
                 }
 
-                const [{ sampleId }] = samples
-
-                return sampleId
+                return sample.sampleId
             })
     }
 }

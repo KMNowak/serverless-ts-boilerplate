@@ -55,7 +55,7 @@ There are few steps, which must be taken before we can deploy
 8) **Service deploy:** When you want to deploy your service online simply run `sls deploy --stage [dev/prod]`. It will create domain, uri, all stack and make your API callable
 
 ## Env variables
-`src/.envs/[dev/prod].yml` file MUST include
+`src/.envs/.env.[dev/prod].yml` file MUST include
 
 ```yml
 MY_SQL_HOST: [value]
@@ -162,22 +162,6 @@ resources:
     GatewayResponseExpiredToken: ${self:custom.common.apiGateway.GatewayResponseExpiredToken}
     GatewayResponseDefault4XX: ${self:custom.common.apiGateway.GatewayResponseDefault4XX}
 
-```
-
-## src/.envs/[dev/prod].yml file MUST include
-
-```
-MY_SQL_HOST: [value]
-MY_SQL_USER: [value]
-MY_SQL_PASSWORD: [value]
-MY_SQL_DATABASE: [value]
-MY_SQL_VERSION: [value]
-
-NODE_PATH: "./:/opt/node_modules" # new path to layered node_modules
-STAGE: ${self:provider.stage}
-
-COGNITO_USER_POOL_ID: [value]
-COGNITO_CLIENT_APP_ID: [value]
 ```
 
 ## Contribution

@@ -10,7 +10,10 @@
     "sourceMap": true,
     "target": "es2017",
     "outDir": "dist",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noImplicitAny": false
   },
   "include": [
     "src/**/**/*.ts"

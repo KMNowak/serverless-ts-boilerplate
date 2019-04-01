@@ -13,7 +13,7 @@ _warmup
 package-lock.json
 
 # Environment variables
-.envs
+.env*
 
 # Editors configs
 .idea

@@ -3,8 +3,8 @@ import { NextFunction, HandlerLambda } from 'middy'
 import { HttpError, R } from 'lib/utils'
 import { AWSTypes, ResponsesTypes } from 'lib/types'
 
-export const validateInput = <E extends AWSTypes.Event, R = ResponsesTypes.LambdaResponse>(validationSchema: JoiObject) => ({
-    before: (handler: HandlerLambda<E, R>, next: NextFunction) => {
+export const validateInput = <Q = {}, B = {}>(validationSchema: JoiObject) => ({
+    before: (handler: HandlerLambda<AWSTypes.Event<Q, B>, ResponsesTypes.LambdaResponse>, next: NextFunction) => {
         const { body, queryStringParameters } = handler.event
         const hasBody = !R.isNilOrEmpty(body)
         const objToValidate = hasBody
@@ -20,12 +20,12 @@ export const validateInput = <E extends AWSTypes.Event, R = ResponsesTypes.Lambd
         }
 
         hasBody
-            ? handler.event.body = value
-            : handler.event.queryStringParameters = value
+            ? handler.event.body = value as B
+            : handler.event.queryStringParameters = value as Q
 
         return next()
     },
-    onError: (_: HandlerLambda<E, R>, next: NextFunction) => {
+    onError: (_: HandlerLambda, next: NextFunction) => {
         return next()
     }
 })
