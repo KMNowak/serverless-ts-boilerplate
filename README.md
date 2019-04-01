@@ -55,7 +55,7 @@ There are few steps, which must be taken before we can deploy
 8) **Service deploy:** When you want to deploy your service online simply run `sls deploy --stage [dev/prod]`. It will create domain, uri, all stack and make your API callable
 
 ## Env variables
-`src/.envs/[dev/prod].yml` file MUST include
+`src/.envs/.env.[dev/prod].yml` file MUST include
 
 ```yml
 MY_SQL_HOST: [value]
