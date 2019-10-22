@@ -22,7 +22,7 @@
     "jsonwebtoken": "8.4.0",
     "jwk-to-pem": "2.0.1",
     "jwt-decode": "2.2.0",
-    "knex": "0.16.3",
+    "knex": "0.19.5",
     "middy": "0.22.0",
     "middy-middleware-warmup": "1.0.3",
     "mysql2": "1.6.4",
